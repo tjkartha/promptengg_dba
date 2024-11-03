@@ -1,0 +1,829 @@
+Prompts to work on:
+
+---- ---- ---- ---- ----
+
+1) Writing clear and specific Instructions:
+---- 
+Summarize the text delimited by triple backticks \
+into a single sentence.
+
+```Ensure your instructions to the model are crystal clear and detailed. \
+This helps the model grasp your intentions accurately, \
+minimizing the risk of receiving irrelevant or inaccurate responses.\
+Additionally, providing longer instructions offers the model more context to work with, \
+enabling it to generate more comprehensive and relevant outputs.```
+
+# The backslashes at the end of each line in the text variable are used as
+# line continuation characters to split the multi-line string into
+# more readable segments without affecting the resulting string's content
+
+Variations:
+-
+Summarize the text delimited by triple quotes \
+into a single sentence.
+\"\"\"Ensure your instructions to the model are crystal clear and detailed. \
+This helps the model grasp your intentions accurately, \
+minimizing the risk of receiving irrelevant or inaccurate responses.\
+Additionally, providing longer instructions offers the model more context to work with, \
+enabling it to generate more comprehensive and relevant outputs.\"\"\"
+-
+Summarize the text delimited by triple dashes \
+into a single sentence.
+---Ensure your instructions to the model are crystal clear and detailed. \
+This helps the model grasp your intentions accurately, \
+minimizing the risk of receiving irrelevant or inaccurate responses.\
+Additionally, providing longer instructions offers the model more context to work with, \
+enabling it to generate more comprehensive and relevant outputs.---
+-
+
+---- ---- ---- ---- ----
+
+# Prompt Injection is the process of overriding original instructions 
+# in the prompt with special user input. It often occurs when untrusted 
+# input is used as part of the prompt. Prompt Injection arises from 
+# the fact the current transformer architectures are not able to 
+# distinguish between original developer instructions and user input 
+# instructions. It is conceivable that future models will be able to 
+# distinguish between these two types of instructions, but even this 
+# would not be guaranteed to stop prompt injection. As it is, 
+# prompt injection is very difficult to stop, and it is likely that 
+# it will continue to be a problem for the foreseeable future.
+
+
+2) Ask for a structured output (like JSON, HTML, xml etc):
+----
+
+Generate a list of two made-up movie titles along \
+with their imdb ratings, primary star cast, directors and genres. \
+Provide them in json format with the following keys: \
+title, imdb_rating, director, starring, genre.
+-
+Generate a list of two made-up movie titles along \
+with their imdb ratings, primary star cast, directors and genres. \
+Generate a sql query to retrieve the titles and ratings only
+-
+---- ---- ---- ---- ----
+
+
+3) Ask the model to check whether conditions are satisfied:
+----
+You will be provided with text delimited by triple quotes.
+If it contains a sequence of instructions, \
+re-write those instructions in the following format:
+
+Step 1: ...
+Step 2: ...
+...
+Step N: ...
+
+If the text lacks a sequence of instructions, \
+then write \"No information provided to create steps.\
+
+\"\"\"Preparing spaghetti is simple! \
+Firstly, you'll want to bring a pot of water to a rolling boil. \
+While the water heats up, grab a pot and add a dash of salt to it. \
+Once the water is boiling, carefully add the spaghetti noodles to the pot. \
+Allow the spaghetti to cook, stirring occasionally, until it reaches your desired level of tenderness. \
+Next, drain the spaghetti using a colander. If you prefer, \
+you can rinse it with cold water to stop the cooking process. \
+Finally, serve the spaghetti with your favorite sauce and toppings. \
+Voila! You've now prepared a delicious plate of spaghetti to enjoy.\"\"\"
+-
+---- ---- ---- ---- ----
+
+# Zero-Shot and Few-Shot Learning: GPT-3.5 exhibits impressive zero-shot 
+# and few-shot learning capabilities, allowing it to perform tasks with 
+# minimal or no task-specific training data. This means it can generate 
+# coherent text and provide reasonable answers to questions even when 
+# provided with limited context or prompts.
+
+4) Zero-shot prompt:
+----
+Classify the text into neutral, negative or positive.
+```Text: I think the vacation is okay.```
+-
+
+Variations:
+
+The odd numbers in this group add up to an even number: 15, 32, 5, 13, 82, 7, 1.
+is this correct?
+-
+# The above prompt is considered a zero-shot prompt because 
+# it asks the model to perform a task
+# (in this case, determining if the sum of certain numbers is even)
+# without providing any examples or prior demonstrations of 
+# how to solve similar problems.
+---- ---- ---- ---- ----
+
+
+5) Zero shot COT (Chain of thought) prompting:
+----
+I went to the market and bought 10 apples. \
+I gave 2 apples to the neighbor and 2 to the repairman. \
+
+Question:
+```I then went and bought 5 more apples and ate 1. \
+How many apples did I remain with?``` \
+-
+
+# This approach asks the model to provide a step-by-step explanation or
+# reasoning without giving any examples or 
+# prior demonstrations of how to perform such reasoning.
+
+Variations:
+I went to the market and bought 10 apples. \
+I gave 2 apples to the neighbor and 2 to the repairman. \
+
+Question:
+```I then went and bought 5 more apples and ate 1. \
+How many apples did I remain with? ``` \
+
+Let's think step by step.
+-
+---- ---- ---- ---- ----
+
+
+6) One-shot Prompting:
+----
+A ``parabu`` is a small, furry animal native to Tanzania. \
+An example of a sentence that uses the word parabu is: \
+We were traveling in Africa and we saw these very cute parabu.
+
+To do a ``garfunkel`` means to jump up and down really fast. \
+An example of a sentence that uses the word garfunkel is:
+-
+
+# We can observe that the model has somehow learned how to perform the task by providing
+# it with just one example (i.e., 1-shot). For more difficult tasks, we can experiment #
+# with increasing the demonstrations (e.g., 3-shot, 5-shot, 10-shot, etc.).
+
+Variations:
+Your task is to answer in a consistent style.
+
+<newbie>: Can you explain hypothesis testing in statistics?
+
+<expert>: Hypothesis testing is a fundamental \
+statistical concept used to make inferences \
+about a population parameter based on sample data. \
+It involves defining null and alternative hypotheses, \
+selecting an appropriate test statistic, \
+and calculating the probability of observing \
+the test statistic under the null hypothesis.
+
+<newbie>: Can you explain p-value in hypothesis testing?
+-
+---- ---- ---- ---- ----
+
+
+7) Few-shot Prompting:
+----
+Your task is to answer in a consistent style.
+
+<newbie>: Can you explain hypothesis testing in statistics?
+
+<expert>: Hypothesis testing is a fundamental \
+statistical concept used to make inferences \
+about a population parameter based on sample data. \
+It involves defining null and alternative hypotheses, \
+selecting an appropriate test statistic, \
+and calculating the probability of observing \
+the test statistic under the null hypothesis.
+
+<newbie>: Can you explain p-value in hypothesis testing?
+
+<expert>: In hypothesis testing, the p-value is a measure \
+of the strength of evidence against the null hypothesis. \
+It represents the probability of observing the test \
+statistic, or a more extreme value, under the assumption \
+that the null hypothesis is true. A lower p-value \
+indicates stronger evidence against the null hypothesis \
+and suggests that the observed result is unlikely \
+to occur by chance alone.
+
+<newbie>: Can you provide an example of F-score in hypothesis testing?
+-
+---- ---- ---- ---- ----
+
+
+8) Multiple tasks from one prompt:
+----
+Perform the following actions:
+1 - Summarize the following text delimited by triple \
+    backticks with 1 sentence in english.
+2 - Translate the summary into German. \
+3 - List each noun in the German summary. \
+4 - Output a json object that contains the following \
+keys: german_summary, nouns.
+
+Separate your answers with line breaks.
+
+Text:
+```In a quaint village surrounded by scenic hills, \
+siblings Megan and Rick embarked on an excursion \
+to gather wildflowers from a nearby meadow. \
+As they wandered amidst the colorful blooms, \
+their laughter echoed through the serene landscape. \
+Unexpectedly, a gust of wind disturbed their path, \
+causing Megan to stumble into a thicket of thorns, \
+prompting Jack to quickly come to her aid. \
+Despite the minor scratches and surprise, \
+they successfully gathered the flowers and made their way back home, \
+where they were greeted with warm embraces. \
+Undeterred by the incident, they spent the rest of the day \
+creating beautiful floral arrangements \
+and eagerly planning their next outdoor adventure.```
+-
+---- ---- ---- ---- ----
+
+# An example of a structured evaluation task. It outlines a clear process for the model to follow:
+# Problem Statement: Define the question and present the student's solution.
+# Actual Solution: Present the correct solution and steps to arrive at it.
+# Comparison: Compare the student's solution with the actual solution.
+# Evaluation: Determine whether the student's solution is correct or incorrect.
+# Justification: Provide reasoning or justification for the evaluation.
+# This format ensures that the model systematically assesses the correctness of the student's
+# solution based on a defined standard (the actual solution), allowing for a clear and detailed evaluation.
+
+# Note that the student's solution is actually not correct.
+# We can fix this by instructing the model to work out its own solution first
+
+
+9) Structured Evaluation Tasks:
+----
+Your task is to determine if the student's solution \
+is correct or not.
+To solve the problem do the following:
+- First, work out your own solution to the problem including the final total.
+- Then compare your solution to the student's solution \
+and evaluate if the student's solution is correct or not.
+Don't decide if the student's solution is correct until
+you have done the problem yourself.
+
+Use the following format:
+Question:
+
+question here
+
+Student's solution:
+
+student's solution here
+
+Actual solution:
+
+steps to work out the solution and your solution here
+
+Is the student's solution the same as actual solution \
+just calculated:
+
+yes or no
+```
+Student grade:
+
+correct or incorrect
+
+justification?
+
+
+Question:
+```
+I'm planning a solar power roof installation and I need help estimating the expenses.
+- Roof space costs $80 / square meter
+- I can purchase solar panels for $300 / square meter
+- I've arranged for maintenance services that will cost me a fixed $80k per year, and $8 per square meter
+with miscellaneous expenses of $1000.
+What is the total cost for the first year of maintenance as a function of the roof space area.
+
+Student's Solution:
+Let x be the area of the roof space in square meters.
+Costs:
+1. Roof space cost: 80x
+2. Solar panel cost: 300x
+3. Maintenance cost: 80,000
+Total cost: 80x + 300x + 80,000 = 380x + 80,000
+```
+Actual solution:
+-
+---- ---- ---- ---- ----
+
+
+10) Model Limitations: Hallucinations:
+----
+Tell me about SG25000 UltraSlim Smart Phone, by Samsung
+-
+
+Variations:
+Tell me about SG25000 UltraSlim Smart Phone, by Samsung, if any such exists
+-
+---- ---- ---- ---- ----
+
+
+11) Iterative Prompt Development:
+----
+You are tasked with assisting a marketing team in crafting a
+product description for a retail website using
+technical specifications provided in a fact sheet.
+
+Write a product description based on the information
+provided in the technical specifications delimited by
+triple backticks.
+
+Technical specifications:
+```OVERVIEW
+
+-Part of a sleek lineup of contemporary laptops, including various configurations, accessories, and support options.
+-Multiple choices for shell color and finish options.
+-Available with standard Windows 11 Home (LPTP-100) or upgraded to Windows 11 Pro (LPTP-110) with additional features.
+-Finish options include brushed aluminum, matte black, glossy white, or rose gold.
+-Laptop available with or without touchscreen functionality.
+-Suitable for personal or professional use.
+-Ideal for multitasking, gaming, and productivity tasks.
+
+CONSTRUCTION
+
+-Lightweight aluminum chassis for durability and portability.
+-High-definition display with touchscreen option (LPTP-110).
+-Built-in webcam and microphone for video conferencing.
+
+DIMENSIONS
+
+-WIDTH 35.6 CM | 14.0”
+-DEPTH 24.6 CM | 9.7”
+-HEIGHT 1.8 CM | 0.71”
+-WEIGHT 1.3 KG | 2.9 lbs
+
+OPTIONS
+
+-Various storage configurations available, including SSD and HDD options.
+-Choice of keyboard layout and language options.
+-Optional extended warranty and support packages.
+
+MATERIALS
+
+-Carbon fiber
+
+SHELL BASE
+
+-Lightweight aluminum alloy construction.
+-Shell thickness: 5 mm.
+
+SCREEN
+-High-definition LED display.
+
+COUNTRY OF ORIGIN
+Designed and assembled in the USA.```
+-
+
+Variations:
+You are tasked with assisting a marketing team in crafting a
+product description for a retail website using
+technical specifications provided in a fact sheet.
+
+Write a product description based on the information
+provided in the technical specifications delimited by
+triple backticks.
+
+Use at most 60 words.
+
+Technical specifications:
+```OVERVIEW
+
+-Part of a sleek lineup of contemporary laptops, including various configurations, accessories, and support options.
+-Multiple choices for shell color and finish options.
+-Available with standard Windows 11 Home (LPTP-100) or upgraded to Windows 11 Pro (LPTP-110) with additional features.
+-Finish options include brushed aluminum, matte black, glossy white, or rose gold.
+-Laptop available with or without touchscreen functionality.
+-Suitable for personal or professional use.
+-Ideal for multitasking, gaming, and productivity tasks.
+
+CONSTRUCTION
+
+-Lightweight aluminum chassis for durability and portability.
+-High-definition display with touchscreen option (LPTP-110).
+-Built-in webcam and microphone for video conferencing.
+
+DIMENSIONS
+
+-WIDTH 35.6 CM | 14.0”
+-DEPTH 24.6 CM | 9.7”
+-HEIGHT 1.8 CM | 0.71”
+-WEIGHT 1.3 KG | 2.9 lbs
+
+OPTIONS
+
+-Various storage configurations available, including SSD and HDD options.
+-Choice of keyboard layout and language options.
+-Optional extended warranty and support packages.
+
+MATERIALS
+
+-Carbon fiber
+
+SHELL BASE
+
+-Lightweight aluminum alloy construction.
+-Shell thickness: 5 mm.
+
+SCREEN
+-High-definition LED display.
+
+COUNTRY OF ORIGIN
+Designed and assembled in the USA.```
+-
+
+You are tasked with assisting a marketing team in crafting a
+product description for a retail website using
+technical specifications provided in a fact sheet.
+
+Write a product description based on the information
+provided in the technical specifications delimited by
+triple backticks.
+
+The description is intended for electropnics retailers,
+hence must be technical in nature and focus on the
+materials the product is constructed from.
+
+At the beginning of the description, include a 10-character
+Product ID in the technical specification.
+
+Use at most 60 words.
+Technical specifications:
+```OVERVIEW
+
+-Part of a sleek lineup of contemporary laptops, including various configurations, accessories, and support options.
+-Multiple choices for shell color and finish options.
+-Available with standard Windows 11 Home (LPTP-100) or upgraded to Windows 11 Pro (LPTP-110) with additional features.
+-Finish options include brushed aluminum, matte black, glossy white, or rose gold.
+-Laptop available with or without touchscreen functionality.
+-Suitable for personal or professional use.
+-Ideal for multitasking, gaming, and productivity tasks.
+
+CONSTRUCTION
+
+-Lightweight aluminum chassis for durability and portability.
+-High-definition display with touchscreen option (LPTP-110).
+-Built-in webcam and microphone for video conferencing.
+
+DIMENSIONS
+
+-WIDTH 35.6 CM | 14.0”
+-DEPTH 24.6 CM | 9.7”
+-HEIGHT 1.8 CM | 0.71”
+-WEIGHT 1.3 KG | 2.9 lbs
+
+OPTIONS
+
+-Various storage configurations available, including SSD and HDD options.
+-Choice of keyboard layout and language options.
+-Optional extended warranty and support packages.
+
+MATERIALS
+
+-Carbon fiber
+
+SHELL BASE
+
+-Lightweight aluminum alloy construction.
+-Shell thickness: 5 mm.
+
+SCREEN
+-High-definition LED display.
+
+COUNTRY OF ORIGIN
+Designed and assembled in the USA.```
+-
+
+You are tasked with assisting a marketing team in crafting a
+product description for a retail website using
+technical specifications provided in a fact sheet.
+
+Write a product description based on the information
+provided in the technical specifications delimited by
+triple backticks.
+
+The description is intended for electronics retailers,
+hence must be technical in nature and focus on the
+materials the product is constructed from.
+
+At the beginning of the description, include a 10-character
+Product ID in the technical specification.
+
+After the description, include a table that gives the
+product's dimensions. The table should have two columns.
+In the first column include the name of the dimension.
+In the second column include the measurements in inches only.
+
+Give the table the title 'Product Dimensions'.
+
+Format everything as HTML that can be used in a website.
+Place the description in a <div> element.
+
+Technical specifications:
+```OVERVIEW
+
+-Part of a sleek lineup of contemporary laptops, including various configurations, accessories, and support options.
+-Multiple choices for shell color and finish options.
+-Available with standard Windows 11 Home (LPTP-100) or upgraded to Windows 11 Pro (LPTP-110) with additional features.
+-Finish options include brushed aluminum, matte black, glossy white, or rose gold.
+-Laptop available with or without touchscreen functionality.
+-Suitable for personal or professional use.
+-Ideal for multitasking, gaming, and productivity tasks.
+
+CONSTRUCTION
+
+-Lightweight aluminum chassis for durability and portability.
+-High-definition display with touchscreen option (LPTP-110).
+-Built-in webcam and microphone for video conferencing.
+
+DIMENSIONS
+
+-WIDTH 35.6 CM | 14.0”
+-DEPTH 24.6 CM | 9.7”
+-HEIGHT 1.8 CM | 0.71”
+-WEIGHT 1.3 KG | 2.9 lbs
+
+OPTIONS
+
+-Various storage configurations available, including SSD and HDD options.
+-Choice of keyboard layout and language options.
+-Optional extended warranty and support packages.
+
+MATERIALS
+
+-Carbon fiber
+
+SHELL BASE
+
+-Lightweight aluminum alloy construction.
+-Shell thickness: 5 mm.
+
+SCREEN
+-High-definition LED display.
+
+COUNTRY OF ORIGIN
+Designed and assembled in the USA.```
+-
+---- ---- ---- ---- ----
+
+
+12) Summarizing: Summarize text with a focus on specific topics:
+----
+Your task is to extract relevant information from \
+a product review from an ecommerce site to give \
+feedback to the Shipping department.
+
+From the review below, delimited by triple quotes \
+extract the information relevant to shipping and \
+delivery. Limit to 30 words.
+
+Review:
+```The Noise NS RX-100 smartwatch, priced at $1000, \
+exceeds expectations with its array of features, \
+including fitness tracking, notifications, and stylish design. \
+Its seamless integration with smartphones and long-lasting battery \
+makes it a reliable companion for everyday use. \
+While the price may seem steep, \
+the watch's performance and durability justify the investment, \
+making it a top choice for tech-savvy consumers. \
+Order it using one-day shipping using the premium plan \
+or two to three day shipping usaing the standard plan.```
+-
+---- ---- ---- ---- ----
+
+
+13) Sentiment Analysis:
+----
+What is the sentiment of the following product review,
+which is delimited with triple backticks?
+
+Review text:
+```Needed an efficient air conditioner for my living room, \
+and this one caught my eye with its compact design \
+and reasonable price. Delivery was swift - \
+arrived within 3 days. \
+Unfortunately, there was a minor issue with the \
+remote control upon arrival, but customer service \
+promptly resolved it by sending a replacement. \
+Easy setup process. Overall, impressed with the \
+company's dedication to customer satisfaction \
+and product quality.```
+-
+
+Variations:
+What is the sentiment of the following product review,
+which is delimited with triple backticks?
+
+Give your answer as a single word, either "positive" \
+or "negative".
+
+Review text:
+```Needed an efficient air conditioner for my living room, \
+and this one caught my eye with its compact design \
+and reasonable price. Delivery was swift - \
+arrived within 3 days. \
+Unfortunately, there was a minor issue with the \
+remote control upon arrival, but customer service \
+promptly resolved it by sending a replacement. \
+Easy setup process. Overall, impressed with the \
+company's dedication to customer satisfaction \
+and product quality.```
+-
+
+Identify a list of emotions that the writer of the \
+following review is expressing. Include no more than \
+five items in the list. Format your answer as a list of \
+lower-case words separated by commas.
+
+Review text:
+```Last November, I regretfully purchased a Sony microwave at an exorbitant price of $79, \
+which turned out to be a complete rip-off! However, by December, the prices had \
+surged to an outrageous $99 to $129 range, leaving me utterly dismayed. \
+Now, let's discuss the microwave itself. Despite its seemingly sturdy exterior, \
+the control panel felt cheap and was prone to smudging. Frankly, \
+I couldn't care less about aesthetics—I demand functionality. \
+Unfortunately, this microwave fell short in that regard. \
+From heating up leftovers to popping popcorn, it struggled \
+with even the simplest tasks. Moreover, after just a year of use, \
+it began emitting strange noises, indicating a serious problem with the motor. \
+To add insult to injury, the warranty had conveniently expired, leaving me \
+with no recourse but to contemplate the expense of repairs or replacement. \
+It's a stark reminder that despite their purported convenience, \
+microwaves are not immune to malfunction and deterioration over time. \
+Despite my best efforts to make it work, this microwave has been nothing \
+but a source of frustration in my kitchen. Even the so-called "speedy" \
+delivery was a farce—I waited two whole days for this disappointment! \
+In conclusion, this microwave is far from perfect—it's been a constant \
+source of disappointment and frustration, and \
+I deeply regret ever purchasing it.```
+-
+
+Identify the following items from the review text:
+- Sentiment (positive or negative)
+- Is the reviewer expressing anger? (true or false)
+- Item purchased by reviewer
+- Company that made the item
+
+The review is delimited with triple backticks. \
+Format your response as a JSON object with \
+"Sentiment", "Anger", "Item" and "Brand" as the keys.
+If the information isn't present, use "unknown" \
+as the value.
+Make your response as short as possible.
+Format the Anger value as a boolean.
+
+Review text:
+```Last November, I regretfully purchased a Sony microwave at an exorbitant price of $79, \
+which turned out to be a complete rip-off! However, by December, the prices had \
+surged to an outrageous $99 to $129 range, leaving me utterly dismayed. \
+Now, let's discuss the microwave itself. Despite its seemingly sturdy exterior, \
+the control panel felt cheap and was prone to smudging. Frankly, \
+I couldn't care less about aesthetics—I demand functionality. \
+Unfortunately, this microwave fell short in that regard. \
+From heating up leftovers to popping popcorn, it struggled \
+with even the simplest tasks. Moreover, after just a year of use, \
+it began emitting strange noises, indicating a serious problem with the motor. \
+To add insult to injury, the warranty had conveniently expired, leaving me \
+with no recourse but to contemplate the expense of repairs or replacement. \
+It's a stark reminder that despite their purported convenience, \
+microwaves are not immune to malfunction and deterioration over time. \
+Despite my best efforts to make it work, this microwave has been nothing \
+but a source of frustration in my kitchen. Even the so-called "speedy" \
+delivery was a farce—I waited two whole days for this disappointment! \
+In conclusion, this microwave is far from perfect—it's been a constant \
+source of disappointment and frustration, and \
+I deeply regret ever purchasing it.```
+-
+
+Determine five topics that are being discussed in the \
+following text, which is delimited by triple backticks.
+
+Make each item one or two words long.
+Format your response as a list of items separated by commas.
+
+Text sample:
+```In a recent extensive survey analyzing job satisfaction among public sector employees, \
+IBM showcased remarkable results. Boasting an impressive 92% satisfaction rating, \
+IBM emerged as a leading entity in cultivating positive workplace environments \
+and employee contentment.
+
+An IBM employee, Sarah Johnson, shared her perspective on the survey outcomes. \
+Echoing sentiments prevalent among her peers, Sarah emphasized IBM's exceptional \
+workplace culture, collaborative ethos, and abundant avenues for professional growth.
+
+IBM's leadership, spearheaded by CEO David Smith, expressed appreciation \
+for the survey results. Smith lauded the dedication and efforts of IBM's workforce, \
+crediting the organization's triumphs to its talented employees and innovative ethos. \
+He reiterated IBM's commitment to nurturing an inclusive and supportive workplace ambiance.
+
+While IBM excelled in the survey, challenges persist in certain sectors. \
+The survey underscored areas warranting improvement, with some departments \
+falling short in employee satisfaction. IBM's leadership remains resolute in \
+addressing these concerns, vowing to invest in initiatives aimed at bolstering \
+job satisfaction and fostering a culture of continual advancement.
+
+Looking ahead, IBM's leadership is charting a course for future initiatives \
+aimed at further enhancing employee satisfaction and organizational success. \
+With a commitment to innovation and continuous improvement, \
+IBM is exploring new strategies to promote employee well-being, \
+foster a culture of diversity and inclusion, and create opportunities \
+for professional growth and development. By embracing these initiatives, \
+IBM aims to solidify its position as a premier employer and drive sustained \
+success in the evolving landscape of the public sector.```
+-
+---- ---- ---- ---- ----
+
+# ChatGPT is trained with sources in many languages. 
+# This gives the model the ability to do translation.
+# Here are some examples of how to use this capability.
+
+
+14) Text translation:
+----
+Translate the following English text to Hindi: \
+```Hi, I would like to order a blender```
+-
+
+Variations:
+Tell me which language this is:
+```Ingeniería de prompts es versátil.```
+-
+
+Translate the following  text to German and Spanish and mandarin: \
+```I want to order a basketball```
+-
+
+Translate the following text to Spanish in both the \
+formal and informal forms:
+'Would you like to order a pillow?'
+-
+---- ---- ---- ---- ----
+
+
+# Here are some examples of common grammar and spelling problems 
+# and the LLM's response.
+# To signal to the LLM that you want it to 
+# proofread your text, you instruct the model to 'proofread' 
+# or 'proofread and correct'.
+
+15) Text Correction:
+----
+Proofread and correct the following text \
+and rewrite the corrected version. Don't use \
+any punctuation around the text: If you don't find \
+and errors, just say "No errors found" \
+
+Text: ```Your going to need your new laptop.```
+-
+
+Variations:
+proofread and correct this review:
+```Got this new toolset for my husband's birthday coz \
+he keeps borrowing mine from the garage. Yes, even grown men \
+appreciate a good set of tools. He carries around everywhere, \
+and it sturdy and practical. One of the screwdriver handles \
+is bit loose, and I don't believe it meant to be like that. \
+It's a bit lackin in some tools for its price. I think there might \
+be other options that offer more variety for the same cost. \
+It arrived earlier than expected, I had a chance to test it \
+out myself before givin it to him.```
+-
+---- ---- ---- ---- ----
+
+
+16) Writing a customer service email:
+----
+You are a customer service AI assistant.
+Your task is to send an email reply to a valued customer.
+Given the customer email delimited by ```, \
+Generate a reply to thank the customer for their review.
+If the sentiment is positive or neutral, thank them for \
+their review.
+If the sentiment is negative, apologize and suggest that \
+they can reach out to customer service.
+Make sure to use specific details from the review.
+Write in a concise and professional tone.
+Sign the email as `AI customer agent`.
+
+Customer review: 
+```Last November, I found an LG washing machine on sale \
+for a great price of $499, a deal too good to pass up! \
+However, come December, the prices shot up to $599, \
+leaving me scratching my head. Now, onto the washing \
+machine itself. While the exterior appeared sleek, the \
+control panel felt a bit flimsy and prone to smudges. \
+But let's be honest, I'm not here for aesthetics—I'm here \
+for functionality. And in that department, the LG washing \
+machine delivered. From washing delicate fabrics to heavy loads, \
+it did the job admirably. However, after a year of regular use, \
+the washing machine started making strange noises, indicating a \
+potential issue with the motor. Unfortunately, the warranty had expired, \
+leaving me to consider my options for repair or replacement. \
+It's a reminder that while washing machines are convenient, \
+they're not immune to wear and tear. Despite its quirks, the \
+LG washing machine has been a staple in my laundry routine, \
+making chores a breeze on busy days. And while the price \
+fluctuations were a disappointment, the speedy delivery in \
+just two days was a pleasant surprise. In conclusion, while \
+the LG washing machine may not be perfect, it's been a reliable \
+companion in my household, and I'm grateful 
+for the convenience it provides.```
+-
